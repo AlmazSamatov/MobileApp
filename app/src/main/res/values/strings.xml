@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MobileApp</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="have_account_sign_in">Have account? Sign in</string>
+    <string name="sign_in">Sign in</string>
+    <string name="create_account">Create Account</string>
+    <string name="load_avatar">Load avatar</string>
+</resources>
