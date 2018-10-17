@@ -1,21 +1,23 @@
+import company.solnyshko.mobileapp.API.LoginBody
 import company.solnyshko.mobileapp.API.Response
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface API {
 
-    @GET("login")
-    fun login(@Query("login") login: String,
-              @Query("password") password: String): Observable<Response>
+    @POST("login/")
+    fun login(@Body loginbody: LoginBody): Observable<Response>
 
     companion object Factory {
         fun create(): API {
             val retrofit = Retrofit.Builder()
-                    .baseUrl("https://stepik.org/api/")
+                    .baseUrl("http://192.168.1.55:8080/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()

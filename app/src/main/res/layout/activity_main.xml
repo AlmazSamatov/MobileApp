@@ -1,108 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
-        android:id="@+id/destination"
+    <FrameLayout
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_2"
-        android:text="@string/destination_address"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="22sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"/>
-
-    <Button
-        android:id="@+id/parcels_to_pick_up"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_2"
-        android:text="@string/parcels_to_pick_up"
-        app:layout_constraintTop_toBottomOf="@id/destination"
-        android:textSize="22sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"/>
-
-    <Button
-        android:id="@+id/parcels_to_deliver"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_2"
-        android:text="@string/parcles_to_deliver"
-        app:layout_constraintTop_toBottomOf="@id/parcels_to_pick_up"
-        android:textSize="22sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"/>
-
-    <Button
-        android:id="@+id/current_parcels"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_2"
-        android:text="@string/my_current_parcels"
-        app:layout_constraintTop_toBottomOf="@id/parcels_to_deliver"
-        android:textSize="22sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"/>
-
-    <Button
-        android:id="@+id/start_session"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_green"
-        android:text="@string/start_work"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        android:layout_marginBottom="15dp"
-        android:textSize="22sp"
-        android:textAllCaps="false"
-        android:visibility="visible" />
-
-    <Button
-        android:id="@+id/take_break"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="@drawable/rounded_button_green"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="@string/take_a_break"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintRight_toLeftOf="@+id/move_to_next"
-        android:textSize="22sp"
-        android:visibility="gone"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/move_to_next"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/rounded_button_green"
-        android:text="@string/move_to_next"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintLeft_toRightOf="@+id/take_break"
-        android:textSize="22sp"
-        android:visibility="gone"
-        android:textAllCaps="false"/>
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

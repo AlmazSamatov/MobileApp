@@ -10,7 +10,7 @@ import android.widget.Toast
 import company.solnyshko.mobileapp.MainActivity
 import company.solnyshko.mobileapp.R
 import kotlinx.android.synthetic.main.login_activity.*
-import kotlinx.android.synthetic.main.login_activity.view.*
+
 
 class LoginActivity : AppCompatActivity(), LoginView {
 
@@ -35,13 +35,13 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun launchMainActivity(userID: String) {
-        val intent = Intent(baseContext, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("userID", userID)
         startActivity(intent)
     }
 
     fun onSignIn(view: View) {
-        loginPresenter.login(view.username.text.toString(), view.password.text.toString())
+        loginPresenter.login(username.text.toString(), password.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
