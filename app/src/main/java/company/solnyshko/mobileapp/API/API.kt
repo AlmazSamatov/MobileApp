@@ -1,3 +1,4 @@
+import company.solnyshko.mobileapp.API.Parcels
 import company.solnyshko.mobileapp.API.Response
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -11,6 +12,9 @@ interface API {
     @GET("login")
     fun login(@Query("login") login: String,
               @Query("password") password: String): Observable<Response>
+
+    @GET("getParcelsList")
+    fun getParcelsList(@Query("login") login: String): Observable<Parcels>
 
     companion object Factory {
         fun create(): API {

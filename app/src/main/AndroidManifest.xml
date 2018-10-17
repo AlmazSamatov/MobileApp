@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".ParcelList.ParcelListActivity"/>
     </application>
 
 </manifest>

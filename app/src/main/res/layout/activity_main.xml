@@ -19,6 +19,7 @@
 
     <Button
         android:id="@+id/parcels_to_pick_up"
+        android:onClick="getParcelsToPick"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/rounded_button_2"
