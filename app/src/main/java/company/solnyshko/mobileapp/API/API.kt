@@ -1,4 +1,5 @@
 import company.solnyshko.mobileapp.API.LoginBody
+import company.solnyshko.mobileapp.API.Parcels
 import company.solnyshko.mobileapp.API.Response
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -13,6 +14,9 @@ interface API {
 
     @POST("login/")
     fun login(@Body loginbody: LoginBody): Observable<Response>
+
+    @GET("getParcelsList")
+    fun getParcelsList(@Query("login") login: String): Observable<Parcels>
 
     companion object Factory {
         fun create(): API {
