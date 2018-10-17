@@ -39,6 +39,5 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
-
     }
 }
