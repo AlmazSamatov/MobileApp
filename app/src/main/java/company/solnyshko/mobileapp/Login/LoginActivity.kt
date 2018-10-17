@@ -11,6 +11,9 @@ import company.solnyshko.mobileapp.R
 import kotlinx.android.synthetic.main.login_activity.*
 
 class LoginActivity : AppCompatActivity(), LoginView {
+
+    private lateinit var loginPresenter: LoginPresenter
+
     override fun turnOffProgressBar() {
         progress_bar.visibility = GONE
         editText.visibility = VISIBLE
@@ -38,6 +41,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        loginPresenter = LoginPresenter(this, this)
 
     }
 }
