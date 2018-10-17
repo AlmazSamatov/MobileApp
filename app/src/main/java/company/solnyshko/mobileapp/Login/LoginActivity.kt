@@ -3,6 +3,7 @@ package company.solnyshko.mobileapp.Login
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -10,22 +11,23 @@ import company.solnyshko.mobileapp.MainActivity
 import company.solnyshko.mobileapp.R
 import kotlinx.android.synthetic.main.login_activity.*
 
+
 class LoginActivity : AppCompatActivity(), LoginView {
 
     private lateinit var loginPresenter: LoginPresenter
 
     override fun turnOffProgressBar() {
         progress_bar.visibility = GONE
-        editText.visibility = VISIBLE
-        editText2.visibility = VISIBLE
-        button2.visibility = VISIBLE
+        username.visibility = VISIBLE
+        password.visibility = VISIBLE
+        signIn.visibility = VISIBLE
     }
 
     override fun turnOnProgressBar() {
         progress_bar.visibility = VISIBLE
-        editText.visibility = GONE
-        editText2.visibility = GONE
-        button2.visibility = GONE
+        username.visibility = GONE
+        password.visibility = GONE
+        signIn.visibility = GONE
     }
 
     override fun showError(msg: String) {
@@ -33,9 +35,13 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun launchMainActivity(userID: String) {
-        val intent = Intent(baseContext, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("userID", userID)
         startActivity(intent)
+    }
+
+    fun onSignIn(view: View) {
+        loginPresenter.login(username.text.toString(), password.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

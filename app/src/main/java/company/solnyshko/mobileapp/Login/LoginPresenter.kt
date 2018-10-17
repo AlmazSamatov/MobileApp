@@ -2,9 +2,11 @@ package company.solnyshko.mobileapp.Login
 
 import android.content.Context
 import android.content.SharedPreferences
+import company.solnyshko.mobileapp.API.LoginBody
 import company.solnyshko.mobileapp.API.Response
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlin.math.log
 
 class LoginPresenter internal constructor(internal var view: LoginView, context: Context) : LoginPresenterInterface {
     private val sharedPreferences: SharedPreferences
@@ -21,33 +23,32 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
     override fun login(login: String, password: String) {
         if (login.trim { it <= ' ' }.isEmpty()) {
             view.showError("Type login")
-            view.turnOffProgressBar()
         } else if (password.trim { it <= ' ' }.isEmpty()) {
             view.showError("Type password")
-            view.turnOffProgressBar()
         } else {
-
-            apiService.login(login, password)
+            view.turnOnProgressBar()
+            apiService.login(LoginBody(login, password))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe({
                         // on Success
                         it: Response ->
                         view.turnOffProgressBar()
-                        if (it.Error == "0") {
+                        if (it.error == 0) {
                             // true success
-                            saveUserID(it.identifier)
-                            view.launchMainActivity(it.identifier)
+                            saveUserID(it.access_token)
+                            view.launchMainActivity(it.access_token)
 
                         } else {
                             // something is wrong
-                            view.showError(it.Error)
+                            view.showError("Error code: " + it.error.toString())
                         }
 
                     }, {
                         // on Error
                         it: Throwable ->
                         view.showError(it.toString())
+                        view.turnOffProgressBar()
 
                     })
         }

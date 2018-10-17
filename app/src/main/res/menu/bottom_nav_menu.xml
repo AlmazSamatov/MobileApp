@@ -20,7 +20,7 @@
         android:title="@string/text_chat"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_receiver"
+        android:id="@+id/action_call"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_call"
         android:title="@string/text_receiver"
