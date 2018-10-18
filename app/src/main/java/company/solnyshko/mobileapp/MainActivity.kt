@@ -9,6 +9,8 @@ import android.view.KeyEvent
 import company.solnyshko.mobileapp.Fragments.DestinationFragment
 import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_action_bar.*
@@ -59,7 +61,9 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             val currFrag = fragmentManager.findFragmentById(R.id.fragment)
-            if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment) {
+            if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment
+                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListFragment
+                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListLeaveFragment) {
                 val fragmentManager = fragmentManager.beginTransaction()
                 fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
             }

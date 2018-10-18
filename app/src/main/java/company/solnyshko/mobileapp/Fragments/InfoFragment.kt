@@ -35,8 +35,6 @@ class InfoFragment : Fragment() {
         parcels_to_deliver.setOnClickListener {
             it -> fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment()).commit()
         }
-    }
-
         start_session.setOnClickListener {
             start_session.visibility = GONE
             take_break.visibility = VISIBLE
@@ -54,8 +52,5 @@ class InfoFragment : Fragment() {
             take_break.visibility = GONE
             move_to_next.visibility = GONE
         }
-
-
     }
-
 }
