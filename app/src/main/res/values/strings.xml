@@ -12,7 +12,7 @@
     <string name="text_map">Map</string>
     <string name="text_chat">Chat</string>
     <string name="text_receiver">Receiver</string>
-    <string name="destination_address">Destination address:</string>
+    <string name="destination_address">Destination address: </string>
     <string name="parcels_to_pick_up">Parcels to pick up from destination address</string>
     <string name="parcles_to_deliver">Parcels to deliver to destination</string>
     <string name="my_current_parcels">My current parcels</string>

@@ -21,6 +21,8 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        destination.text = "Destination address: \n Russia, Innopolis, University str., 1"
         setOnClicks()
     }
 
@@ -51,6 +53,7 @@ class InfoFragment : Fragment() {
             start_session.visibility = VISIBLE
             take_break.visibility = GONE
             move_to_next.visibility = GONE
+            destination.text = "Destination address: \n Russia, Kazan, Aktayskaya str., 2"
         }
     }
 }

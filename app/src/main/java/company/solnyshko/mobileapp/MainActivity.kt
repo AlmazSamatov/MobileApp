@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import company.solnyshko.mobileapp.Chat.ChatFragment
 import company.solnyshko.mobileapp.Fragments.DestinationFragment
 import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
@@ -50,13 +51,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_info -> {
                     fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
                 }
+                R.id.action_chat -> {
+                    fragmentManager.replace(R.id.fragment, ChatFragment()).commit()
+                }
                 R.id.action_map -> {
                     val intent = Intent(this, MapsActivity::class.java)
                     startActivity(intent)
                 }
-                //R.id.action_chat ->
                 R.id.action_call -> {
-                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("89991564759"))
+                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:89991564759"))
                     startActivity(intent)
                 }
             }
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             val currFrag = fragmentManager.findFragmentById(R.id.fragment)
             if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment
+            || fragmentManager.findFragmentById(R.id.fragment) is ChatFragment
                 || fragmentManager.findFragmentById(R.id.fragment) is ParcelListFragment
                 || fragmentManager.findFragmentById(R.id.fragment) is ParcelListLeaveFragment) {
                 val fragmentManager = fragmentManager.beginTransaction()
