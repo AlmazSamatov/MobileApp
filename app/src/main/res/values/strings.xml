@@ -20,6 +20,7 @@
     <string name="take_a_break">Take a break</string>
     <string name="move_to_next">Move to the next order</string>
     <string name="destination_address_info">Destination address info:</string>
+    <string name="title_activity_maps">Map</string>
     <string name="build_the_route">Build the route</string>
 
 </resources>
