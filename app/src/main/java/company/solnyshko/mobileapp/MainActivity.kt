@@ -7,10 +7,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import company.solnyshko.mobileapp.Fragments.DestinationFragment
+import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.Map.MapsActivity
 import kotlinx.android.synthetic.main.activity_info.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_action_bar.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setBottomNavigationListener()
+    }
+
+    fun cameraOnClick(v: View){
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        startActivityForResult(intent, 0)
     }
 
     @SuppressLint("MissingPermission")
@@ -57,7 +67,9 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             val currFrag = fragmentManager.findFragmentById(R.id.fragment)
-            if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment) {
+            if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment
+                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListFragment
+                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListLeaveFragment) {
                 val fragmentManager = fragmentManager.beginTransaction()
                 fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
             }

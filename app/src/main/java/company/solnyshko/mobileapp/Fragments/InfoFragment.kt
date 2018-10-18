@@ -7,6 +7,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_info
 import kotlinx.android.synthetic.main.activity_info.*
@@ -27,7 +29,12 @@ class InfoFragment : Fragment() {
         destination.setOnClickListener {
             fragmentManager.replace(R.id.fragment, DestinationFragment()).commit()
         }
-
+        parcels_to_pick_up.setOnClickListener {
+            it -> fragmentManager.replace(R.id.fragment, ParcelListFragment()).commit()
+        }
+        parcels_to_deliver.setOnClickListener {
+            it -> fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment()).commit()
+        }
         start_session.setOnClickListener {
             start_session.visibility = GONE
             take_break.visibility = VISIBLE
@@ -45,8 +52,5 @@ class InfoFragment : Fragment() {
             take_break.visibility = GONE
             move_to_next.visibility = GONE
         }
-
-
     }
-
 }

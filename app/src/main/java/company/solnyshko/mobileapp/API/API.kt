@@ -15,8 +15,8 @@ interface API {
     @POST("login/")
     fun login(@Body loginbody: LoginBody): Observable<Response>
 
-    @GET("getParcelsList")
-    fun getParcelsList(@Query("login") login: String): Observable<Parcels>
+    @GET("allParcels/")
+    fun allParcels(): Observable<Parcels>
 
     companion object Factory {
         fun create(): API {

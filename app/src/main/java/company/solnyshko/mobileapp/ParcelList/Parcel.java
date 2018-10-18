@@ -3,12 +3,12 @@ package company.solnyshko.mobileapp.ParcelList;
 public class Parcel {
     // Id of icon
     private int icon;
-    private String name;
+    private String type;
     private boolean isChecked;
 
-    public Parcel(int icon, String name, boolean isChecked) {
+    public Parcel(int icon, String type, boolean isChecked) {
         this.icon = icon;
-        this.name = name;
+        this.type = type;
         this.isChecked = isChecked;
     }
 
@@ -21,12 +21,12 @@ public class Parcel {
         this.icon = icon;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String name) {
+        this.type = name;
     }
 
     public boolean isChecked() {

@@ -40,7 +40,7 @@ public class ParcelAdapter extends ArrayAdapter<Parcel> {
         icon.setImageResource(currentParcel.getIcon());
 
         TextView name = (TextView) listItem.findViewById(R.id.textView_name);
-        name.setText(currentParcel.getName());
+        name.setText(currentParcel.getType());
 
         CheckBox check = (CheckBox) listItem.findViewById(R.id.checkBoxView_check);
         check.setChecked(currentParcel.isChecked());
