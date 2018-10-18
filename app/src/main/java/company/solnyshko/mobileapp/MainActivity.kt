@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
-import kotlinx.android.synthetic.main.activity_info.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_action_bar.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setBottomNavigationListener()
+    }
+
+    fun cameraOnClick(v: View){
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        startActivityForResult(intent, 0)
     }
 
     @SuppressLint("MissingPermission")

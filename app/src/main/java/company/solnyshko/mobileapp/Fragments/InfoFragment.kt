@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
+import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_info
 import kotlinx.android.synthetic.main.activity_info.*
@@ -26,8 +28,12 @@ class InfoFragment : Fragment() {
         destination.setOnClickListener {
             it -> fragmentManager.add(R.id.fragment, DestinationFragment())
         }
-
-
+        parcels_to_pick_up.setOnClickListener {
+            it -> fragmentManager.replace(R.id.fragment, ParcelListFragment()).commit()
+        }
+        parcels_to_deliver.setOnClickListener {
+            it -> fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment()).commit()
+        }
     }
 
 
