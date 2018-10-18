@@ -28,4 +28,18 @@
         android:layout_marginEnd="5dp"
         android:textColor="@color/colorAccent" />
 
+    <Button
+        android:id="@+id/show_in_map"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/rounded_button_green"
+        android:text="@string/build_the_route"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:visibility="visible" />
+
 </android.support.constraint.ConstraintLayout>

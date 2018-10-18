@@ -3,22 +3,29 @@ package company.solnyshko.mobileapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
+import company.solnyshko.mobileapp.Fragments.DestinationFragment
 import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.Map.MapsActivity
 import kotlinx.android.synthetic.main.activity_info.*
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var userID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null){
+        userID = intent.extras.getString("userID")
+
+        if (savedInstanceState == null) {
             val fragmentManager = fragmentManager.beginTransaction()
-            fragmentManager.replace(R.id.fragment, InfoFragment())
-            fragmentManager.commit()
+            fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
         }
 
         setBottomNavigationListener()
@@ -31,8 +38,7 @@ class MainActivity : AppCompatActivity() {
             val fragmentManager = fragmentManager.beginTransaction()
             when (item.itemId) {
                 R.id.action_info -> {
-                    fragmentManager.replace(R.id.fragment, InfoFragment())
-                    fragmentManager.commit()
+                    fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
                 }
                 R.id.action_map -> {
                     val intent = Intent(this, MapsActivity::class.java)
@@ -40,11 +46,24 @@ class MainActivity : AppCompatActivity() {
                 }
                 //R.id.action_chat ->
                 R.id.action_call -> {
-                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:89991564759"))
+                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("89991564759"))
                     startActivity(intent)
                 }
             }
             true
         }
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            val currFrag = fragmentManager.findFragmentById(R.id.fragment)
+            if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment) {
+                val fragmentManager = fragmentManager.beginTransaction()
+                fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
 }
