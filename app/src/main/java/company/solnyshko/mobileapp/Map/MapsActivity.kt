@@ -1,6 +1,9 @@
 package company.solnyshko.mobileapp.Map
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.android.volley.Request
@@ -16,7 +19,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
+import company.solnyshko.mobileapp.Chat.ChatFragment
+import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.R
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -30,6 +36,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        setBottomNavigationListener()
+    }
+
+    @SuppressLint("MissingPermission")
+    fun setBottomNavigationListener() {
+
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            val fragmentManager = fragmentManager.beginTransaction()
+            when (item.itemId) {
+                R.id.action_info -> {
+                    fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
+                }
+                R.id.action_chat -> {
+                    fragmentManager.replace(R.id.fragment, ChatFragment()).commit()
+                }
+                R.id.action_call -> {
+                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:89991564759"))
+                    startActivity(intent)
+                }
+            }
+            true
+        }
     }
 
     /**

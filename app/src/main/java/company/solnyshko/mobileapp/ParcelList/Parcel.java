@@ -5,12 +5,22 @@ public class Parcel {
     private int icon;
     private String type;
     private boolean isChecked;
+    private String description;
 
     public Parcel(int icon, String type, boolean isChecked) {
         this.icon = icon;
         this.type = type;
         this.isChecked = isChecked;
+        this.description = "";
     }
+
+    public Parcel(int icon, String type, boolean isChecked, String description) {
+        this.icon = icon;
+        this.type = type;
+        this.isChecked = isChecked;
+        this.description = description;
+    }
+
 
     public int getIcon() {
 
@@ -35,5 +45,13 @@ public class Parcel {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

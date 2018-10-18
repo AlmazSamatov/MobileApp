@@ -21,7 +21,7 @@ interface API {
     companion object Factory {
         fun create(): API {
             val retrofit = Retrofit.Builder()
-                    .baseUrl("http://192.168.1.55:8080/")
+                    .baseUrl("http://10.240.17.238:8080/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
