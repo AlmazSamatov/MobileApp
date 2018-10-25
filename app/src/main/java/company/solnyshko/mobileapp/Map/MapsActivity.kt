@@ -39,6 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setBottomNavigationListener()
+        bottom_navigation.selectedItemId = R.id.action_map
     }
 
     @SuppressLint("MissingPermission")
