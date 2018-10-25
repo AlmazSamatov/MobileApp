@@ -35,9 +35,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setBottomNavigationListener()
+
+        bottom_navigation.selectedItemId = R.id.action_info
     }
 
-    fun cameraOnClick(v: View){
+    fun cameraOnClick(v: View) {
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
         startActivityForResult(intent, 0)
     }
@@ -71,9 +73,9 @@ class MainActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             val currFrag = fragmentManager.findFragmentById(R.id.fragment)
             if (fragmentManager.findFragmentById(R.id.fragment) is DestinationFragment
-            || fragmentManager.findFragmentById(R.id.fragment) is ChatFragment
-                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListFragment
-                || fragmentManager.findFragmentById(R.id.fragment) is ParcelListLeaveFragment) {
+                    || fragmentManager.findFragmentById(R.id.fragment) is ChatFragment
+                    || fragmentManager.findFragmentById(R.id.fragment) is ParcelListFragment
+                    || fragmentManager.findFragmentById(R.id.fragment) is ParcelListLeaveFragment) {
                 val fragmentManager = fragmentManager.beginTransaction()
                 fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
             }
