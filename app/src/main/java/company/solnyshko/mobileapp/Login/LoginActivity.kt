@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
         loginPresenter = LoginPresenter(this, this)
-        loginPresenter.checkLoggedIn()
-
+        launchMainActivity("123")
     }
 }

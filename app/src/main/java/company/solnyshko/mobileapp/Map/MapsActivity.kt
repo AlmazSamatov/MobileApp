@@ -10,6 +10,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import android.view.View.GONE
+import android.view.View.VISIBLE
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,7 +24,7 @@ import com.google.maps.android.PolyUtil
 import company.solnyshko.mobileapp.Chat.ChatFragment
 import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.R
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -45,10 +47,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val fragmentManager = fragmentManager.beginTransaction()
             when (item.itemId) {
+                R.id.action_map -> {
+                    if (!map.isVisible) {
+                        map.view?.visibility = VISIBLE
+                        fragment.visibility = GONE
+                    }
+                }
                 R.id.action_info -> {
+                    map.view?.visibility = GONE
                     fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
                 }
                 R.id.action_chat -> {
+                    map.view?.visibility = GONE
                     fragmentManager.replace(R.id.fragment, ChatFragment()).commit()
                 }
                 R.id.action_call -> {
