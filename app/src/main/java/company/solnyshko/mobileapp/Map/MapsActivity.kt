@@ -55,10 +55,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 R.id.action_info -> {
                     map.view?.visibility = GONE
+                    fragment.visibility = VISIBLE
                     fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
                 }
                 R.id.action_chat -> {
                     map.view?.visibility = GONE
+                    fragment.visibility = VISIBLE
                     fragmentManager.replace(R.id.fragment, ChatFragment()).commit()
                 }
                 R.id.action_call -> {
