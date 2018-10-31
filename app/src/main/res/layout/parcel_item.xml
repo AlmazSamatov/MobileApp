@@ -26,6 +26,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="40dp"
         android:scaleX="1.20"
+        android:focusable="false"
         android:scaleY="1.20"
         android:layout_centerVertical="true"/>
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import company.solnyshko.mobileapp.ParcelList.MyParcelsFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.R
@@ -37,6 +38,10 @@ class InfoFragment : Fragment() {
         parcels_to_deliver.setOnClickListener {
             it -> fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment()).commit()
         }
+        current_parcels.setOnClickListener {
+            it -> fragmentManager.replace(R.id.fragment, MyParcelsFragment()).commit()
+        }
+
         start_session.setOnClickListener {
             start_session.visibility = GONE
             take_break.visibility = VISIBLE

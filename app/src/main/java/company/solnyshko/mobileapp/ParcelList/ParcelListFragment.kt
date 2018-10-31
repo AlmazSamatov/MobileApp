@@ -18,13 +18,22 @@ import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_parclist
 import kotlinx.android.synthetic.main.activity_parclist.*
 import kotlinx.android.synthetic.main.custom_action_bar.*
+import kotlinx.android.synthetic.main.parcel_item.view.*
 import kotlin.collections.ArrayList
+import android.widget.CheckBox
+import android.widget.TextView
+
+
 
 class ParcelListFragment : Fragment(), ParcelListView {
     override fun showParcels(parcelsToAdd: ArrayList<Parcel>) {
         val listView: ListView = parcels_list
         val mAdapter = ParcelAdapter(activity, R.id.parcels_list, parcelsToAdd)
         listView.setAdapter(mAdapter)
+        listView.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemIdAtPosition(position)
+            val isChecked = view.checkBoxView_check
+        }
     }
 
     private lateinit var parcelPresenter: ParcelListPresenter
@@ -55,5 +64,6 @@ class ParcelListFragment : Fragment(), ParcelListView {
 
         parcelPresenter = ParcelListPresenter(this, activity)
         parcelPresenter.loadParcels()
+
     }
 }
