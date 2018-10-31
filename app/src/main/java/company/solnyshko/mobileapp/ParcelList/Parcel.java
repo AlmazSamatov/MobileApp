@@ -1,8 +1,6 @@
 package company.solnyshko.mobileapp.ParcelList;
 
-import io.realm.RealmObject;
-
-public class Parcel extends RealmObject {
+public class Parcel {
     // Id of icon
     private int icon = 0;
     private String type = "";

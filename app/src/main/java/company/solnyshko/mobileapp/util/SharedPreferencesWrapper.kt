@@ -28,7 +28,7 @@ class SharedPreferencesWrapper(context: Context) {
         editor.apply()
     }
 
-    fun putParcels(parcels: List<Parcel>) {
+    fun putParcel(parcels: Parcel) {
         val editor = sharedPreferences.edit()
         editor.putString("parcels", gson.toJson(parcels))
         editor.apply()

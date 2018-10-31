@@ -14,7 +14,6 @@ import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.Map.MapsActivity
 import company.solnyshko.mobileapp.ParcelList.Parcel
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_info.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.*

@@ -14,17 +14,13 @@ import android.widget.TextView
 import java.util.ArrayList
 
 import company.solnyshko.mobileapp.R
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
-import io.realm.kotlin.createObject
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 
 
 class ParcelAdapter(private val mContext: Context, resource: Int, objects: ArrayList<Parcel>) : ArrayAdapter<Parcel>(mContext, resource, objects), CompoundButton.OnCheckedChangeListener {
     private var parcelsList = ArrayList<Parcel>()
     private val mCheckStates: SparseBooleanArray
-
+    private val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(context)
     init {
         parcelsList = objects
         mCheckStates = SparseBooleanArray(parcelsList.size)
@@ -62,15 +58,8 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         mCheckStates.put(buttonView.tag as Int, isChecked)
         if (isChecked) {
-//            Observable.fromCallable {
-//
-//            }.doOnNext { list ->
-//                var str = ""
-//                list?.map { str += "Parcel type: " + it.type + "; IsChecked: " + it.isChecked + "\n" }
-//                println(str)
-//            }.subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe()
+            sharedPreferences.putParcel(parcelsList.get(buttonView.tag as Int))
+            parcelsList.remove(parcelsList.get(buttonView.tag as Int))
         }
     }
 
@@ -80,7 +69,6 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
 
     fun setChecked(position: Int, isChecked: Boolean) {
         mCheckStates.put(position, isChecked)
-
     }
 
     fun toggle(position: Int) {
