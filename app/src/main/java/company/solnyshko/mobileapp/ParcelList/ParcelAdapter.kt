@@ -14,18 +14,16 @@ import android.widget.TextView
 import java.util.ArrayList
 
 import company.solnyshko.mobileapp.R
-import company.solnyshko.mobileapp.room.AppDatabase
-import company.solnyshko.mobileapp.room.ParcelDao
-import company.solnyshko.mobileapp.room.ParcelEntity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
+import io.realm.kotlin.createObject
+
 
 class ParcelAdapter(private val mContext: Context, resource: Int, objects: ArrayList<Parcel>) : ArrayAdapter<Parcel>(mContext, resource, objects), CompoundButton.OnCheckedChangeListener {
     private var parcelsList = ArrayList<Parcel>()
     private val mCheckStates: SparseBooleanArray
-    private var db: AppDatabase? = null
-    private var parcelDao: ParcelDao? = null
 
     init {
         parcelsList = objects
@@ -38,7 +36,7 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
         if (listItem == null) {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.parcel_item, parent, false)
             vh.name = listItem!!.findViewById(R.id.textView_name)
-            vh.icon = listItem.findViewById(R.id.imageView_icon)
+            vh.icon = listItem!!.findViewById(R.id.imageView_icon)
             vh.isChecked = listItem.findViewById(R.id.checkBoxView_check)
             listItem.tag = vh
         } else {
@@ -64,21 +62,15 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         mCheckStates.put(buttonView.tag as Int, isChecked)
         if (isChecked) {
-            Observable.fromCallable {
-                db = AppDatabase.getAppDataBase(context = context.applicationContext)
-                parcelDao = db?.parcelDao()
-                with(parcelDao){
-                    val parcel = parcelsList.get(buttonView.tag as Int)
-                    this?.insertParcel(ParcelEntity(parcel.icon, parcel.type, parcel.isChecked))
-                }
-                db?.parcelDao()?.getGenders()
-            }.doOnNext { list ->
-                var str = ""
-                list?.map { str+= "Parcel type: " + it.type+ "; IsChecked: " + it.isChecked + "\n" }
-                println(str)
-            }.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe()
+//            Observable.fromCallable {
+//
+//            }.doOnNext { list ->
+//                var str = ""
+//                list?.map { str += "Parcel type: " + it.type + "; IsChecked: " + it.isChecked + "\n" }
+//                println(str)
+//            }.subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe()
         }
     }
 

@@ -1,11 +1,22 @@
 package company.solnyshko.mobileapp.ParcelList;
 
-public class Parcel {
+import io.realm.RealmObject;
+
+public class Parcel extends RealmObject {
     // Id of icon
-    private int icon;
-    private String type;
-    private boolean isChecked;
-    private String description;
+    private int icon = 0;
+    private String type = "";
+    private boolean isChecked = false;
+    private String description = "";
+    private String parcelId = "";
+
+    public Parcel(){}
+
+    public Parcel(String id, String type, String remark) {
+        this.parcelId = id;
+        this.type = type;
+        this.description = remark;
+    }
 
     public Parcel(int icon, String type, boolean isChecked) {
         this.icon = icon;
@@ -23,7 +34,6 @@ public class Parcel {
 
 
     public int getIcon() {
-
         return icon;
     }
 
