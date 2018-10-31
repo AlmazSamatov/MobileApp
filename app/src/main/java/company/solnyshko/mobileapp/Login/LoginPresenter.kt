@@ -1,24 +1,18 @@
 package company.solnyshko.mobileapp.Login
 
 import android.content.Context
-import android.content.SharedPreferences
 import company.solnyshko.mobileapp.API.LoginBody
-import company.solnyshko.mobileapp.API.Response
+import company.solnyshko.mobileapp.API.LoginResponse
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlin.math.log
 
 class LoginPresenter internal constructor(internal var view: LoginView, context: Context) : LoginPresenterInterface {
-    private val sharedPreferences: SharedPreferences
-    private val NAME_OF_SHARED_PREF = "userData"
+    private val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(context)
     private val apiService = API.create()
 
     private val userID: String
-        get() = sharedPreferences.getString("userID", "")
-
-    init {
-        sharedPreferences = context.getSharedPreferences(NAME_OF_SHARED_PREF, Context.MODE_PRIVATE)
-    }
+        get() = sharedPreferences.getString("userID")
 
     override fun login(login: String, password: String) {
         if (login.trim { it <= ' ' }.isEmpty()) {
@@ -32,7 +26,7 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
                     .subscribeOn(Schedulers.io())
                     .subscribe({
                         // on Success
-                        it: Response ->
+                        it: LoginResponse ->
                         view.turnOffProgressBar()
                         if (it.error == 0) {
                             // true success
@@ -57,9 +51,7 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
     }
 
     private fun saveUserID(userID: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("userID", userID)
-        editor.apply()
+        sharedPreferences.putString("accessToken", userID)
     }
 
     override fun checkLoggedIn() {

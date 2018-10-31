@@ -64,19 +64,19 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         mCheckStates.put(buttonView.tag as Int, isChecked)
         if (isChecked) {
-            Observable.fromCallable({
-                db = AppDatabase.getAppDataBase(context = context)
+            Observable.fromCallable {
+                db = AppDatabase.getAppDataBase(context = context.applicationContext)
                 parcelDao = db?.parcelDao()
                 with(parcelDao){
-                    var parcel = parcelsList.get(buttonView.tag as Int)
+                    val parcel = parcelsList.get(buttonView.tag as Int)
                     this?.insertParcel(ParcelEntity(parcel.icon, parcel.type, parcel.isChecked))
                 }
                 db?.parcelDao()?.getGenders()
-            }).doOnNext({list ->
+            }.doOnNext { list ->
                 var str = ""
                 list?.map { str+= "Parcel type: " + it.type+ "; IsChecked: " + it.isChecked + "\n" }
                 println(str)
-            }).subscribeOn(Schedulers.io())
+            }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()
         }
