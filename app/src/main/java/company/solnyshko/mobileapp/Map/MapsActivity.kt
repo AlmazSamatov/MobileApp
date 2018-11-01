@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.location.Location
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -36,7 +35,7 @@ import org.json.JSONObject
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
 
-    private lateinit var map: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -94,9 +93,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        map.getUiSettings().setZoomControlsEnabled(true)
-        map.setOnMarkerClickListener(this)
+        this.googleMap = googleMap
+        this.googleMap.getUiSettings().setZoomControlsEnabled(true)
+        this.googleMap.setOnMarkerClickListener(this)
 
         setUpMap()
 
@@ -113,7 +112,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         // 1
-        map.isMyLocationEnabled = true
+        this.googleMap.isMyLocationEnabled = true
 
 // 2
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
@@ -126,8 +125,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 var myLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
 
                 val latLngDestination = LatLng(55.753051, 48.743203) // SM City
-                map.addMarker(MarkerOptions().position(myLatLng).title("Current Position"))
-                map.addMarker(MarkerOptions().position(latLngDestination).title("Destination"))
+                this.googleMap.addMarker(MarkerOptions().position(myLatLng).title("Current Position"))
+                this.googleMap.addMarker(MarkerOptions().position(latLngDestination).title("Destination"))
 
 
                 val path: MutableList<List<LatLng>> = ArrayList()
@@ -146,7 +145,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                         path.add(PolyUtil.decode(points))
                     }
                     for (i in 0 until path.size) {
-                        map.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                        this.googleMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
                     }
                 }, Response.ErrorListener {
                     _ ->
@@ -154,7 +153,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val requestQueue = Volley.newRequestQueue(this)
                 requestQueue.add(directionsRequest)
 
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12.0f))
+                this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12.0f))
 
             }
         }

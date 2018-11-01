@@ -79,6 +79,8 @@ class InfoFragment : Fragment() {
                         showFragment()
 
                     })
+        } else{
+            destination.text = "Destination address: \n ${sharedPreferences.getDestination()}"
         }
 
         showFragment()
