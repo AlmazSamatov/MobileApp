@@ -11,9 +11,6 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
     private val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(context)
     private val apiService = API.create()
 
-    private val userID: String
-        get() = sharedPreferences.getString("userID")
-
     override fun login(login: String, password: String) {
         if (login.trim { it <= ' ' }.isEmpty()) {
             view.showError("Type login")
@@ -33,7 +30,7 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
                             // TODO: we should save access_token in request_headers (when send requests)
                             // X-Token: <access_token>
                             saveUserID(it.access_token)
-                            view.launchMainActivity(it.access_token)
+                            view.launchMainActivity(it.access_token, it.id)
 
                         } else {
                             // something is wrong
@@ -55,8 +52,9 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
     }
 
     override fun checkLoggedIn() {
-        val userID = userID
-        if (userID.isNotEmpty())
-            view.launchMainActivity(userID)
+        val userID = sharedPreferences.getId()
+        val token = sharedPreferences.getAccessToken()
+        if (userID.isNotEmpty() && token.isNotEmpty())
+            view.launchMainActivity(token, userID)
     }
 }

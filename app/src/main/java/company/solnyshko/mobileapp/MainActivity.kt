@@ -13,23 +13,14 @@ import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.Map.MapsActivity
-import company.solnyshko.mobileapp.ParcelList.Parcel
-import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_info.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.custom_action_bar.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var userID: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        userID = intent.extras.getString("userID")
 
         if (savedInstanceState == null) {
             val fragmentManager = fragmentManager.beginTransaction()
