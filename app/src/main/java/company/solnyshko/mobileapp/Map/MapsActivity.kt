@@ -3,6 +3,10 @@ package company.solnyshko.mobileapp.Map
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -12,7 +16,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,7 +27,10 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
+import company.solnyshko.mobileapp.Chat.ChatFragment
+import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.R
+import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -33,11 +41,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -46,8 +49,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient
+        setBottomNavigationListener()
+        bottom_navigation.selectedItemId = R.id.action_map
+    }
 
+    @SuppressLint("MissingPermission")
+    fun setBottomNavigationListener() {
+
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            val fragmentManager = fragmentManager.beginTransaction()
+            when (item.itemId) {
+                R.id.action_map -> {
+                    if (!map.isVisible) {
+                        map.view?.visibility = VISIBLE
+                        fragment.visibility = GONE
+                    }
+                }
+                R.id.action_info -> {
+                    map.view?.visibility = GONE
+                    fragment.visibility = VISIBLE
+                    fragmentManager.replace(R.id.fragment, InfoFragment()).commit()
+                }
+                R.id.action_chat -> {
+                    map.view?.visibility = GONE
+                    fragment.visibility = VISIBLE
+                    fragmentManager.replace(R.id.fragment, ChatFragment()).commit()
+                }
+                R.id.action_call -> {
+                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:89991564759"))
+                    startActivity(intent)
+                }
+            }
+            true
+        }
     }
 
     /**
