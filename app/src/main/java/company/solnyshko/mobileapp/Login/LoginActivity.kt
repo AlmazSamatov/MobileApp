@@ -50,6 +50,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        //val sp = SharedPreferencesWrapper(this)
+        //sp.sharedPreferences.edit().clear().commit()
         loginPresenter = LoginPresenter(this, this)
         //launchMainActivity("123")
     }

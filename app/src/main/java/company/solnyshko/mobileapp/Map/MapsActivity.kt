@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.location.Location
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -97,7 +96,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
-
         setUpMap()
 
 
@@ -115,6 +113,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         // 1
         mMap.isMyLocationEnabled = true
 
+
 // 2
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             // Got last known location. In some rare situations this can be null.
@@ -126,8 +125,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 var myLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
 
                 val latLngDestination = LatLng(55.753051, 48.743203) // SM City
+
                 mMap.addMarker(MarkerOptions().position(myLatLng).title("Current Position"))
                 mMap.addMarker(MarkerOptions().position(latLngDestination).title("Destination"))
+
 
 
                 val path: MutableList<List<LatLng>> = ArrayList()
@@ -146,7 +147,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                         path.add(PolyUtil.decode(points))
                     }
                     for (i in 0 until path.size) {
+
                         mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+
                     }
                 }, Response.ErrorListener {
                     _ ->
@@ -154,7 +157,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val requestQueue = Volley.newRequestQueue(this)
                 requestQueue.add(directionsRequest)
 
+
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12.0f))
+
 
             }
         }

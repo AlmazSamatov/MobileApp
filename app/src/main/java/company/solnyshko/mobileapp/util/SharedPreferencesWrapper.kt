@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 
 class SharedPreferencesWrapper(context: Context) {
 
-    private val sharedPreferences: SharedPreferences
+    val sharedPreferences: SharedPreferences
     private val NAME_OF_SHARED_PREF = "userData"
     private val gson = GsonBuilder().create()
 
@@ -44,9 +44,84 @@ class SharedPreferencesWrapper(context: Context) {
         editor.apply()
     }
 
+    fun putMyParcel(parcel: Parcel) {
+        val editor = sharedPreferences.edit()
+        val json = sharedPreferences.getString("myParcels", "")
+        if (json == ""){
+            val parcelsList = arrayListOf<Parcel>(parcel)
+            editor.putString("myParcels", gson.toJson(parcelsList))
+            editor.apply()
+        }else{
+            var parcelsList : ArrayList<Parcel>? = null
+            parcelsList = gson.fromJson(json, object : TypeToken<List<Parcel>>() {}.type)
+            if (parcelsList != null) {
+                parcelsList.add(parcel)
+                editor.putString("myParcels", gson.toJson(parcelsList))
+                editor.apply()
+            }
+        }
+    }
+
     fun getParcelsToPick(): List<Parcel> {
         val parcels = sharedPreferences.getString("parcelsToPick", "")
         return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+    }
+
+    fun getMyParcels(): List<Parcel> {
+        val parcels = sharedPreferences.getString("myParcels", "")
+        return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+    }
+
+    fun deleteFromParcelToDeliver(p : Parcel) : Boolean {
+        val json = sharedPreferences.getString("parcelsToDeliver", "")
+        var parcelsList : ArrayList<Parcel>? = null
+        parcelsList = gson.fromJson(json, object : TypeToken<List<Parcel>>() {}.type)
+        if (parcelsList != null){
+            val iterator = parcelsList.iterator()
+            while (iterator.hasNext()){
+                val element = iterator.next()
+                if (element.type == p.type && element.icon == p.icon && element.isChecked == p.isChecked){
+                    parcelsList.remove(element)
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun deleteAllParcelToPick(){
+        val editor = sharedPreferences.edit()
+        editor.putString("parcelsToPick", "")
+        editor.apply()
+    }
+
+    fun deleteAllParcelToDeliver(){
+        val editor = sharedPreferences.edit()
+        editor.putString("parcelsToDeliver", "")
+        editor.apply()
+    }
+
+    fun deleteAllMyParcels(){
+        val editor = sharedPreferences.edit()
+        editor.putString("myParcels", "")
+        editor.apply()
+    }
+
+    fun deleteFromParcelToPick(p : Parcel) : Boolean {
+        val json = sharedPreferences.getString("parcelsToPick", "")
+        var parcelsList : ArrayList<Parcel>? = null
+        parcelsList = gson.fromJson(json, object : TypeToken<List<Parcel>>() {}.type)
+        if (parcelsList != null){
+            val iterator = parcelsList.iterator()
+            while (iterator.hasNext()){
+                val element = iterator.next()
+                if (element.type == p.type && element.icon == p.icon && element.isChecked == p.isChecked){
+                    parcelsList.remove(element)
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     fun putAccessToken(token: String) {
