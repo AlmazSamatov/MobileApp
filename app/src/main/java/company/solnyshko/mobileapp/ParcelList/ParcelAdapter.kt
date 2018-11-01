@@ -17,8 +17,6 @@ import company.solnyshko.mobileapp.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
-import io.realm.kotlin.createObject
 
 
 class ParcelAdapter(private val mContext: Context, resource: Int, objects: ArrayList<Parcel>) : ArrayAdapter<Parcel>(mContext, resource, objects), CompoundButton.OnCheckedChangeListener {
