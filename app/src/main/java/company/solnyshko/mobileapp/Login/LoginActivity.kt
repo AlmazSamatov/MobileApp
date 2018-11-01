@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import company.solnyshko.mobileapp.MainActivity
 import company.solnyshko.mobileapp.R
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import kotlinx.android.synthetic.main.login_activity.*
 
 
@@ -34,9 +35,11 @@ class LoginActivity : AppCompatActivity(), LoginView {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
-    override fun launchMainActivity(userID: String) {
+    override fun launchMainActivity(token:String, id: String) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("userID", userID)
+        val sp = SharedPreferencesWrapper(this)
+        sp.putAccessToken(token)
+        sp.putId(id)
         startActivity(intent)
     }
 
@@ -47,8 +50,9 @@ class LoginActivity : AppCompatActivity(), LoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        //val sp = SharedPreferencesWrapper(this)
+        //sp.sharedPreferences.edit().clear().commit()
         loginPresenter = LoginPresenter(this, this)
-        loginPresenter.checkLoggedIn()
 
     }
 }

@@ -18,13 +18,24 @@ import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_parclist
 import kotlinx.android.synthetic.main.activity_parclist.*
 import kotlinx.android.synthetic.main.custom_action_bar.*
+import kotlinx.android.synthetic.main.parcel_item.view.*
 import kotlin.collections.ArrayList
+import android.widget.CheckBox
+import android.widget.TextView
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
+
 
 class ParcelListFragment : Fragment(), ParcelListView {
+    private lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
+
     override fun showParcels(parcelsToAdd: ArrayList<Parcel>) {
         val listView: ListView = parcels_list
         val mAdapter = ParcelAdapter(activity, R.id.parcels_list, parcelsToAdd)
         listView.setAdapter(mAdapter)
+        listView.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemIdAtPosition(position)
+            val isChecked = view.checkBoxView_check
+        }
     }
 
     private lateinit var parcelPresenter: ParcelListPresenter
@@ -49,11 +60,11 @@ class ParcelListFragment : Fragment(), ParcelListView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferencesWrapper = SharedPreferencesWrapper(activity)
         var actionBar = (getActivity() as AppCompatActivity).supportActionBar
         actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM)
         actionBar.setCustomView(R.layout.custom_action_bar)
 
-        parcelPresenter = ParcelListPresenter(this, activity)
-        parcelPresenter.loadParcels()
+        showParcels(sharedPreferencesWrapper.getParcelsToPick() as ArrayList<Parcel>)
     }
 }
