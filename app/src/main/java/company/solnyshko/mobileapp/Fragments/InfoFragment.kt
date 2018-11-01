@@ -12,6 +12,7 @@ import android.widget.Toast
 import company.solnyshko.mobileapp.API.AddressResponse
 import company.solnyshko.mobileapp.API.RequestWithID
 import company.solnyshko.mobileapp.ParcelList.MyParcelsFragment
+import company.solnyshko.mobileapp.ParcelList.Parcel
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.R
@@ -34,16 +35,16 @@ class InfoFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadNext()
+        loadNext(false)
 
         setOnClicks()
     }
 
-    fun loadNext() {
+    fun loadNext(load: Boolean) {
 
         val sharedPreferences = SharedPreferencesWrapper(activity)
 
-        if (sharedPreferences.getDestination().isEmpty()){
+        if (load || sharedPreferences.getDestination().isEmpty()){
             showProgressBar()
 
             val apiService = API.create(sharedPreferences.getAccessToken())
@@ -60,6 +61,20 @@ class InfoFragment : Fragment() {
                             destination.text = "Destination address: \n ${it.address_to}"
 
                             thread {
+                                it.parcels_to_deliver.forEach {
+                                    if (it.type.toLowerCase().contains("box"))
+                                        it.icon = R.drawable.box
+                                    else if (it.type.toLowerCase().contentEquals("letter"))
+                                        it.icon = R.drawable.letter
+                                }
+
+                                it.parcels_to_pick.forEach {
+                                    if (it.type.toLowerCase().contains("box"))
+                                        it.icon = R.drawable.box
+                                    else if (it.type.toLowerCase().contentEquals("letter"))
+                                        it.icon = R.drawable.letter
+                                }
+
                                 sharedPreferences.putDestination(it.address_to)
                                 sharedPreferences.putParcelsToDeliver(it.parcels_to_deliver)
                                 sharedPreferences.putParcelsToPick(it.parcels_to_pick)
@@ -98,7 +113,10 @@ class InfoFragment : Fragment() {
             val sharedPreferences = SharedPreferencesWrapper(activity)
             if (sharedPreferences.isBreakTime()){
                 start_session.visibility = View.VISIBLE
+                take_break.visibility = View.GONE
+                move_to_next.visibility = View.GONE
             } else{
+                start_session.visibility = View.GONE
                 take_break.visibility = View.VISIBLE
                 move_to_next.visibility = View.VISIBLE
             }
@@ -151,6 +169,7 @@ class InfoFragment : Fragment() {
             fragmentManager.replace(R.id.fragment, MyParcelsFragment()).commit()
         }
 
+
         start_session.setOnClickListener {
             start_session.visibility = GONE
             take_break.visibility = VISIBLE
@@ -175,7 +194,7 @@ class InfoFragment : Fragment() {
             move_to_next.visibility = GONE
             val sharedPreferences = SharedPreferencesWrapper(activity)
             sharedPreferences.setBreakTime()
-            loadNext()
+            loadNext(true)
         }
     }
 }

@@ -45,8 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setContentView(R.layout.activity_maps)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = map as SupportMapFragment
         mapFragment.getMapAsync(this)
         setBottomNavigationListener()
         bottom_navigation.selectedItemId = R.id.action_map

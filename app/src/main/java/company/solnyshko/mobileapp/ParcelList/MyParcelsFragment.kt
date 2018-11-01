@@ -4,7 +4,9 @@ import android.app.ActionBar
 import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 import company.solnyshko.mobileapp.R
@@ -33,6 +35,10 @@ class MyParcelsFragment : Fragment(), ParcelListView {
         val listView: ListView = parcels_list
         val mAdapter = ParcelAdapter(activity, R.id.parcels_list, parcelsToAdd)
         listView.setAdapter(mAdapter)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater!!.inflate(R.layout.activity_parclist, null)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

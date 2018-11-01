@@ -53,6 +53,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
         //val sp = SharedPreferencesWrapper(this)
         //sp.sharedPreferences.edit().clear().commit()
         loginPresenter = LoginPresenter(this, this)
-        //launchMainActivity("123")
+
     }
 }

@@ -35,7 +35,10 @@ class SharedPreferencesWrapper(context: Context) {
 
     fun getParcelsToDeliver(): List<Parcel> {
         val parcels = sharedPreferences.getString("parcelsToDeliver", "")
-        return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        if (parcels != "")
+            return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        else
+            return ArrayList<Parcel>()
     }
 
     fun putParcelsToPick(parcels: List<Parcel>) {
@@ -64,12 +67,18 @@ class SharedPreferencesWrapper(context: Context) {
 
     fun getParcelsToPick(): List<Parcel> {
         val parcels = sharedPreferences.getString("parcelsToPick", "")
-        return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        if (parcels != "")
+            return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        else
+            return ArrayList<Parcel>()
     }
 
     fun getMyParcels(): List<Parcel> {
         val parcels = sharedPreferences.getString("myParcels", "")
-        return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        if (parcels != "")
+            return gson.fromJson(parcels, object : TypeToken<List<Parcel>>() {}.type)
+        else
+            return ArrayList<Parcel>()
     }
 
     fun deleteFromParcelToDeliver(p : Parcel) : Boolean {
@@ -82,6 +91,8 @@ class SharedPreferencesWrapper(context: Context) {
                 val element = iterator.next()
                 if (element.type == p.type && element.icon == p.icon && element.isChecked == p.isChecked){
                     parcelsList.remove(element)
+                    deleteAllParcelToDeliver()
+                    putParcelsToDeliver(parcelsList)
                     return true
                 }
             }
@@ -117,6 +128,8 @@ class SharedPreferencesWrapper(context: Context) {
                 val element = iterator.next()
                 if (element.type == p.type && element.icon == p.icon && element.isChecked == p.isChecked){
                     parcelsList.remove(element)
+                    deleteAllParcelToPick()
+                    putParcelsToPick(parcelsList)
                     return true
                 }
             }
@@ -167,7 +180,7 @@ class SharedPreferencesWrapper(context: Context) {
     }
 
     fun isBreakTime(): Boolean {
-        return sharedPreferences.getBoolean("breakTime", false)
+        return sharedPreferences.getBoolean("breakTime", true)
     }
 
 //    fun getMsgs(): List<Pair<String, Boolean>> {

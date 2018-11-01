@@ -14,6 +14,7 @@ import android.widget.TextView
 import java.util.ArrayList
 
 import company.solnyshko.mobileapp.R
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -60,15 +61,11 @@ class ParcelAdapter(private val mContext: Context, resource: Int, objects: Array
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         mCheckStates.put(buttonView.tag as Int, isChecked)
         if (isChecked) {
-//            Observable.fromCallable {
-//
-//            }.doOnNext { list ->
-//                var str = ""
-//                list?.map { str += "Parcel type: " + it.type + "; IsChecked: " + it.isChecked + "\n" }
-//                println(str)
-//            }.subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe()
+            val sp = SharedPreferencesWrapper(this.mContext)
+            val parcel = parcelsList[buttonView.tag as Int]
+            sp.putMyParcel(parcel)
+            sp.deleteFromParcelToDeliver(parcel)
+            sp.deleteFromParcelToPick(parcel)
         }
     }
 
