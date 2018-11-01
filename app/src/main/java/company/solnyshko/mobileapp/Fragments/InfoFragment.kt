@@ -27,6 +27,7 @@ class InfoFragment : Fragment() {
 
     private var errorMsg = ""
     private var isShowFragment = false
+    private var isShowProgressBar = false
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater!!.inflate(activity_info, null)
@@ -125,14 +126,18 @@ class InfoFragment : Fragment() {
     }
 
     fun showProgressBar() {
-        destination.visibility = View.GONE
-        parcels_to_pick_up.visibility = View.GONE
-        parcels_to_deliver.visibility = View.GONE
-        current_parcels.visibility = View.GONE
-        start_session.visibility = View.GONE
-        take_break.visibility = View.GONE
-        move_to_next.visibility = View.GONE
-        progress_bar.visibility = View.VISIBLE
+        if (activity == null)
+            isShowProgressBar = true
+        else{
+            destination.visibility = View.GONE
+            parcels_to_pick_up.visibility = View.GONE
+            parcels_to_deliver.visibility = View.GONE
+            current_parcels.visibility = View.GONE
+            start_session.visibility = View.GONE
+            take_break.visibility = View.GONE
+            move_to_next.visibility = View.GONE
+            progress_bar.visibility = View.VISIBLE
+        }
     }
 
     fun showError(msg: String) {
@@ -150,6 +155,10 @@ class InfoFragment : Fragment() {
         if (isShowFragment) {
             showFragment()
             isShowFragment = false
+        }
+        if (isShowProgressBar){
+            showProgressBar()
+            isShowProgressBar = false
         }
         super.onAttach(context)
     }
