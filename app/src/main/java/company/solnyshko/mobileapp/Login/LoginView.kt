@@ -1,7 +1,7 @@
 package company.solnyshko.mobileapp.Login
 
 internal interface LoginView {
-    fun launchMainActivity(userID: String)
+    fun launchMainActivity(token: String, id: String)
 
     fun turnOffProgressBar()
 
