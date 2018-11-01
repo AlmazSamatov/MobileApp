@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.parcel_item.view.*
 
 class MyParcelsFragment : Fragment(), ParcelListView {
 
-    private val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(activity.applicationContext)
+    private lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
 
     override fun turnOffProgressBar() {
         progress_bar.visibility = View.GONE
@@ -37,10 +37,11 @@ class MyParcelsFragment : Fragment(), ParcelListView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferencesWrapper = SharedPreferencesWrapper(activity)
         var actionBar = (getActivity() as AppCompatActivity).supportActionBar
         actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM)
         actionBar.setCustomView(R.layout.custom_action_bar)
 
-        showParcels(sharedPreferences.getParcels() as ArrayList<Parcel>)
+        showParcels(sharedPreferencesWrapper.getMyParcels() as ArrayList<Parcel>)
     }
 }
