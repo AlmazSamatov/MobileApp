@@ -1,8 +1,7 @@
 package company.solnyshko.mobileapp.ParcelList;
 
-import io.realm.RealmObject;
 
-public class Parcel extends RealmObject {
+public class Parcel {
     // Id of icon
     private int icon = 0;
     private String type = "";
@@ -10,7 +9,8 @@ public class Parcel extends RealmObject {
     private String description = "";
     private String parcelId = "";
 
-    public Parcel(){}
+    public Parcel() {
+    }
 
     public Parcel(String id, String type, String remark) {
         this.parcelId = id;
