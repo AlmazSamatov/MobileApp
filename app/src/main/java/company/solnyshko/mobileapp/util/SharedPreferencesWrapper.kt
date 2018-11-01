@@ -94,4 +94,17 @@ class SharedPreferencesWrapper(context: Context) {
     fun isBreakTime(): Boolean {
         return sharedPreferences.getBoolean("breakTime", false)
     }
+
+//    fun getMsgs(): List<Pair<String, Boolean>> {
+//        val msgsOld = sharedPreferences.getString("msgs", "")
+//        val msgsOld1 = gson.fromJson(msgsOld, object : TypeToken<List<Pair<String, Boolean>>>() {}.type)
+//        sharedPreferences.getString("msgs", "")
+//    }
+
+    fun saveMessage(msg: String) {
+
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("msgs", false)
+        editor.apply()
+    }
 }

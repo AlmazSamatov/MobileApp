@@ -29,7 +29,6 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
                             // true success
                             // TODO: we should save access_token in request_headers (when send requests)
                             // X-Token: <access_token>
-                            saveUserID(it.access_token)
                             view.launchMainActivity(it.access_token, it.id)
 
                         } else {
@@ -45,10 +44,6 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
 
                     })
         }
-    }
-
-    private fun saveUserID(userID: String) {
-        sharedPreferences.putString("accessToken", userID)
     }
 
     override fun checkLoggedIn() {

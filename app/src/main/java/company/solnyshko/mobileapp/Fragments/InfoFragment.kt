@@ -10,7 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import company.solnyshko.mobileapp.API.AddressResponse
-import company.solnyshko.mobileapp.API.NextAddressRequest
+import company.solnyshko.mobileapp.API.RequestWithID
 import company.solnyshko.mobileapp.ParcelList.MyParcelsFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
@@ -20,7 +20,6 @@ import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_info.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 
 class InfoFragment : Fragment() {
@@ -49,7 +48,7 @@ class InfoFragment : Fragment() {
 
             val apiService = API.create(sharedPreferences.getAccessToken())
 
-            apiService.nextAddress(NextAddressRequest(sharedPreferences.getId()))
+            apiService.nextAddress(RequestWithID(sharedPreferences.getId()))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe({

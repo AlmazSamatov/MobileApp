@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import okhttp3.OkHttpClient
+import retrofit2.Call
 
 
 interface API {
@@ -18,7 +19,14 @@ interface API {
     fun allParcels(): Observable<Parcels>
 
     @POST("nextAddress/")
-    fun nextAddress(@Body request: NextAddressRequest): Observable<AddressResponse>
+    fun nextAddress(@Body request: RequestWithID): Observable<AddressResponse>
+
+    @POST("sendMessage/")
+    fun sendMessage(@Body request: SendMessageRequest): Call<Response>
+
+    @POST("getMessages/")
+    fun getMessage(@Body request: RequestWithID): Observable<MessageResponse>
+
 
     companion object Factory {
         fun create(access_token: String = ""): API {
