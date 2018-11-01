@@ -24,12 +24,14 @@ import com.google.maps.android.PolyUtil
 import company.solnyshko.mobileapp.Chat.ChatFragment
 import company.solnyshko.mobileapp.Fragments.InfoFragment
 import company.solnyshko.mobileapp.R
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var sharedPreference: SharedPreferencesWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         setBottomNavigationListener()
         bottom_navigation.selectedItemId = R.id.action_map
+        sharedPreference = SharedPreferencesWrapper(this)
     }
 
     @SuppressLint("MissingPermission")

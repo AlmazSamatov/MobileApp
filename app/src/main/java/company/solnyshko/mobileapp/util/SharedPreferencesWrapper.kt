@@ -184,7 +184,6 @@ class SharedPreferencesWrapper(context: Context) {
     }
 
     fun saveMessage(msg: String) {
-
         val editor = sharedPreferences.edit()
         editor.putBoolean("msgs", false)
         editor.apply()
