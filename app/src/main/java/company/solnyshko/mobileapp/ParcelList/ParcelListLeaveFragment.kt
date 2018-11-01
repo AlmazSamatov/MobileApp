@@ -14,10 +14,13 @@ import android.widget.Toast
 import company.solnyshko.mobileapp.API.Parcels
 import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_parclist
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import kotlinx.android.synthetic.main.activity_parclist.*
 import kotlin.collections.ArrayList
 
 class ParcelListLeaveFragment : Fragment(), ParcelListView {
+    private lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
+
     override fun showParcels(parcelsToAdd: ArrayList<Parcel>) {
         val listView: ListView = parcels_list
         val mAdapter = ParcelAdapter(activity, R.id.parcels_list, parcelsToAdd)
@@ -46,20 +49,11 @@ class ParcelListLeaveFragment : Fragment(), ParcelListView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        sharedPreferencesWrapper = SharedPreferencesWrapper(activity)
         var actionBar = (getActivity() as AppCompatActivity).supportActionBar
         actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM)
         actionBar.setCustomView(R.layout.custom_action_bar)
 
-        val listView: ListView = parcels_list
-        val parcelsList = ArrayList<Parcel>()
-        parcelsList.add(Parcel(R.drawable.box, "Small box 20x20", false))
-        parcelsList.add(Parcel(R.drawable.letter, "Letter 10x10", false))
-        parcelsList.add(Parcel(R.drawable.box, "Box 120x120", false))
-        parcelsList.add(Parcel(R.drawable.letter, "Letter 25x60", false))
-        parcelsList.add(Parcel(R.drawable.box, "Red box", false))
-        parcelsList.add(Parcel(R.drawable.box, "Small white box", false))
-        val mAdapter = ParcelAdapter(activity, R.id.parcels_list, parcelsList)
-        listView.setAdapter(mAdapter)
+        showParcels(sharedPreferencesWrapper.getParcelsToDeliver() as ArrayList<Parcel>)
     }
 }
