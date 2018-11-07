@@ -1,12 +1,15 @@
 package company.solnyshko.mobileapp.ParcelList
 
 import android.app.ActionBar
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -23,7 +26,9 @@ import kotlin.collections.ArrayList
 import android.widget.CheckBox
 import android.widget.TextView
 import company.solnyshko.mobileapp.R.layout.abc_action_bar_title_item
+import company.solnyshko.mobileapp.util.MyConstants
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
+import java.util.*
 
 
 class ParcelListFragment : Fragment(), ParcelListView {
@@ -60,14 +65,20 @@ class ParcelListFragment : Fragment(), ParcelListView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            var index = (0 until parcels_list.adapter.count).random()
 
-        val listView: ListView = parcels_list
-        var adapter = listView.adapter
+            val parcel = parcels_list.adapter.getItem(index) as Parcel
 
-        //adapter.
+            (parcels_list.adapter as ParcelAdapter).setChecked(index, true)
 
-        //sharedPreferencesWrapper.putMyParcel()
+            (parcels_list.adapter as ParcelAdapter).notifyDataSetChanged()
+
+            sharedPreferencesWrapper.deleteFromParcelToDeliver(parcel)
+
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -76,13 +87,21 @@ class ParcelListFragment : Fragment(), ParcelListView {
         var actionBar = (getActivity() as AppCompatActivity).supportActionBar
         actionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM
         actionBar.setCustomView(R.layout.custom_action_bar)
+        activity.camera.setOnClickListener {
+            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+            startActivityForResult(intent, 0)
+        }
 
         showParcels(sharedPreferencesWrapper.getParcelsToPick() as ArrayList<Parcel>)
     }
 
-    override fun onDestroyView() {
-        var actionBar = (getActivity() as AppCompatActivity).supportActionBar
-        actionBar!!.setDisplayShowHomeEnabled(true)
-        super.onDestroyView()
+    override fun onDestroy() {
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE)
+        super.onDestroy()
     }
+
+    fun IntRange.random() =
+            Random().nextInt((endInclusive + 1) - start) + start
 }
+

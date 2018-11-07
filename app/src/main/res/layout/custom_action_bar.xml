@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/camera"
-    android:layout_width="39dp"
-    android:layout_height="36dp"
-    android:adjustViewBounds="true"
-    android:background="@android:color/transparent"
-    android:scaleType="fitCenter"
-    android:layout_gravity="right"
-    android:src="@drawable/qrcode"
-    android:onClick="cameraOnClick"
-    android:layout_weight="0.02" />
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_gravity="right">
+
+    <ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/camera"
+        android:layout_width="39dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="0.02"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:onClick="onCameraClick"
+        android:src="@drawable/qrcode" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/which_fragment"/>
+
+</android.support.constraint.ConstraintLayout>

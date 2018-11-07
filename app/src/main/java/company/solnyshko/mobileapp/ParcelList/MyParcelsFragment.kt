@@ -41,6 +41,12 @@ class MyParcelsFragment : Fragment(), ParcelListView {
         return inflater!!.inflate(R.layout.activity_parclist, null)
     }
 
+    override fun onDestroy() {
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE)
+        super.onDestroy()
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferencesWrapper = SharedPreferencesWrapper(activity)

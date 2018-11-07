@@ -39,8 +39,7 @@ interface API {
                 }
 
             val retrofit = Retrofit.Builder()
-                    //.baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8000/")
-                    .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8000/")
+                    .baseUrl("https://www.delex.ga:8000/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
