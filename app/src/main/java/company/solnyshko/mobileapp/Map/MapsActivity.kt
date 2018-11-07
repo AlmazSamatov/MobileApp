@@ -38,6 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onMarkerClick(p0: Marker?) = false
     private lateinit var mMap: GoogleMap
     private lateinit var sharedPreference: SharedPreferencesWrapper
+    private lateinit var destination: String
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -54,6 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setBottomNavigationListener()
         bottom_navigation.selectedItemId = R.id.action_map
         sharedPreference = SharedPreferencesWrapper(this)
+        destination = sharedPreference.getDestination()
     }
 
     @SuppressLint("MissingPermission")
