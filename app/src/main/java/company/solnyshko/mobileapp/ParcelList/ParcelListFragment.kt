@@ -29,7 +29,7 @@ import company.solnyshko.mobileapp.R.layout.abc_action_bar_title_item
 import company.solnyshko.mobileapp.util.MyConstants
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import java.util.*
-
+import company.solnyshko.mobileapp.util.random
 
 class ParcelListFragment : Fragment(), ParcelListView {
     private lateinit var sharedPreferencesWrapper: SharedPreferencesWrapper
@@ -74,7 +74,7 @@ class ParcelListFragment : Fragment(), ParcelListView {
 
             (parcels_list.adapter as ParcelAdapter).notifyDataSetChanged()
 
-            sharedPreferencesWrapper.deleteFromParcelToDeliver(parcel)
+            sharedPreferencesWrapper.deleteFromParcelToPick(parcel)
 
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -100,8 +100,5 @@ class ParcelListFragment : Fragment(), ParcelListView {
         actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE)
         super.onDestroy()
     }
-
-    fun IntRange.random() =
-            Random().nextInt((endInclusive + 1) - start) + start
 }
 

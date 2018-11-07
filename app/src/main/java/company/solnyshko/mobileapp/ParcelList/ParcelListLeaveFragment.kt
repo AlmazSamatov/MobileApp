@@ -18,6 +18,7 @@ import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_parclist
 import company.solnyshko.mobileapp.util.MyConstants
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
+import company.solnyshko.mobileapp.util.random
 import kotlinx.android.synthetic.main.activity_parclist.*
 import kotlinx.android.synthetic.main.custom_action_bar.*
 import java.util.*
@@ -53,7 +54,7 @@ class ParcelListLeaveFragment : Fragment(), ParcelListView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             var index = (0 until parcels_list.adapter.count).random()
 
             val parcel = parcels_list.adapter.getItem(index) as Parcel
@@ -89,6 +90,4 @@ class ParcelListLeaveFragment : Fragment(), ParcelListView {
         super.onDestroy()
     }
 
-    fun IntRange.random() =
-            Random().nextInt((endInclusive + 1) - start) + start
 }
