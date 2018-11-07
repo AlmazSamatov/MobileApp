@@ -12,11 +12,11 @@ import android.widget.Toast
 import company.solnyshko.mobileapp.API.AddressResponse
 import company.solnyshko.mobileapp.API.RequestWithID
 import company.solnyshko.mobileapp.ParcelList.MyParcelsFragment
-import company.solnyshko.mobileapp.ParcelList.Parcel
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
 import company.solnyshko.mobileapp.R
 import company.solnyshko.mobileapp.R.layout.activity_info
+import company.solnyshko.mobileapp.util.MyConstants
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +45,7 @@ class InfoFragment : Fragment() {
 
         val sharedPreferences = SharedPreferencesWrapper(activity)
 
-        if (load || sharedPreferences.getDestination().isEmpty()){
+        if (load || sharedPreferences.getDestination().isEmpty()) {
             showProgressBar()
 
             val apiService = API.create(sharedPreferences.getAccessToken())
@@ -95,7 +95,7 @@ class InfoFragment : Fragment() {
                         showFragment()
 
                     })
-        } else{
+        } else {
             destination.text = "Destination address: \n ${sharedPreferences.getDestination()}"
         }
 
@@ -112,11 +112,11 @@ class InfoFragment : Fragment() {
             parcels_to_deliver.visibility = View.VISIBLE
             current_parcels.visibility = View.VISIBLE
             val sharedPreferences = SharedPreferencesWrapper(activity)
-            if (sharedPreferences.isBreakTime()){
+            if (sharedPreferences.isBreakTime()) {
                 start_session.visibility = View.VISIBLE
                 take_break.visibility = View.GONE
                 move_to_next.visibility = View.GONE
-            } else{
+            } else {
                 start_session.visibility = View.GONE
                 take_break.visibility = View.VISIBLE
                 move_to_next.visibility = View.VISIBLE
@@ -128,7 +128,7 @@ class InfoFragment : Fragment() {
     fun showProgressBar() {
         if (activity == null)
             isShowProgressBar = true
-        else{
+        else {
             destination.visibility = View.GONE
             parcels_to_pick_up.visibility = View.GONE
             parcels_to_deliver.visibility = View.GONE
@@ -156,7 +156,7 @@ class InfoFragment : Fragment() {
             showFragment()
             isShowFragment = false
         }
-        if (isShowProgressBar){
+        if (isShowProgressBar) {
             showProgressBar()
             isShowProgressBar = false
         }
@@ -169,15 +169,14 @@ class InfoFragment : Fragment() {
             fragmentManager.replace(R.id.fragment, DestinationFragment()).commit()
         }
         parcels_to_pick_up.setOnClickListener { it ->
-            fragmentManager.replace(R.id.fragment, ParcelListFragment()).commit()
+            fragmentManager.replace(R.id.fragment, ParcelListFragment(), MyConstants.PARCEL_TO_PICK_UP_FRAGMENT_TAG).commit()
         }
         parcels_to_deliver.setOnClickListener { it ->
-            fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment()).commit()
+            fragmentManager.replace(R.id.fragment, ParcelListLeaveFragment(), MyConstants.PARCEL_TO_DELIVER_FRAGMENT_TAG).commit()
         }
         current_parcels.setOnClickListener { it ->
             fragmentManager.replace(R.id.fragment, MyParcelsFragment()).commit()
         }
-
 
         start_session.setOnClickListener {
             start_session.visibility = GONE

@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.parcel_item.view.*
 import kotlin.collections.ArrayList
 import android.widget.CheckBox
 import android.widget.TextView
+import company.solnyshko.mobileapp.R.layout.abc_action_bar_title_item
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 
 
@@ -58,13 +59,30 @@ class ParcelListFragment : Fragment(), ParcelListView {
         return inflater!!.inflate(activity_parclist, null)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val listView: ListView = parcels_list
+        var adapter = listView.adapter
+
+        //adapter.
+
+        //sharedPreferencesWrapper.putMyParcel()
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferencesWrapper = SharedPreferencesWrapper(activity)
         var actionBar = (getActivity() as AppCompatActivity).supportActionBar
-        actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM)
+        actionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM
         actionBar.setCustomView(R.layout.custom_action_bar)
 
         showParcels(sharedPreferencesWrapper.getParcelsToPick() as ArrayList<Parcel>)
+    }
+
+    override fun onDestroyView() {
+        var actionBar = (getActivity() as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(true)
+        super.onDestroyView()
     }
 }

@@ -6,13 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.view.View
 import company.solnyshko.mobileapp.Chat.ChatFragment
 import company.solnyshko.mobileapp.Fragments.DestinationFragment
-import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
+import company.solnyshko.mobileapp.Map.MapsActivity
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
-import company.solnyshko.mobileapp.Map.MapsActivity
+import company.solnyshko.mobileapp.util.MyConstants
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -35,6 +36,16 @@ class MainActivity : AppCompatActivity() {
     fun cameraOnClick(v: View) {
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
         startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val fragmentToPickUp = supportFragmentManager.findFragmentByTag(MyConstants.PARCEL_TO_PICK_UP_FRAGMENT_TAG)
+        val fragmentToDeliver = supportFragmentManager.findFragmentByTag(MyConstants.PARCEL_TO_PICK_UP_FRAGMENT_TAG)
+
+        fragmentToDeliver?.onActivityResult(requestCode, resultCode, data)
+        fragmentToPickUp?.onActivityResult(requestCode, resultCode, data)
     }
 
     @SuppressLint("MissingPermission")
