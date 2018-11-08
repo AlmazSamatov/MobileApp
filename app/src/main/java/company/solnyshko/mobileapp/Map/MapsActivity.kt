@@ -34,7 +34,7 @@ import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONObject
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
     private lateinit var mMap: GoogleMap
     private lateinit var sharedPreference: SharedPreferencesWrapper
@@ -55,7 +55,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setBottomNavigationListener()
         bottom_navigation.selectedItemId = R.id.action_map
         sharedPreference = SharedPreferencesWrapper(this)
-        destination = sharedPreference.getDestination()
+//        destination = sharedPreference.getDestination()
+        destination = "Sportivnaya, 112, Innopolis, Tatarstan, Russia, 420500"
+        destination = destination_to_true_format()
     }
 
     @SuppressLint("MissingPermission")
@@ -100,7 +102,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.getUiSettings().setZoomControlsEnabled(true)
+        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setOnMarkerClickListener(this)
 
         setUpMap()
@@ -120,39 +122,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
             if (location != null) {
                 lastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-
-                var myLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
-
-                val latLngDestination = LatLng(55.753051, 48.743203) // SM City
+                val myLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
                 mMap.addMarker(MarkerOptions().position(myLatLng).title("Current Position"))
-                mMap.addMarker(MarkerOptions().position(latLngDestination).title("Destination"))
 
 
                 val path: MutableList<List<LatLng>> = ArrayList()
-                val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin="+myLatLng.latitude.toString()+","+myLatLng.longitude.toString()+"&destination=55.753051,48.743203&key=AIzaSyA24mwjp2WEz31XDV5DGl-EBQe4ceFbnzc"
+                val urlDestination = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+destination+"&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyA24mwjp2WEz31XDV5DGl-EBQe4ceFbnzc"
 
-
-                val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
-                    response ->
+                val destinationRequest = object : StringRequest(Request.Method.GET, urlDestination, Response.Listener<String> { response ->
                     val jsonResponse = JSONObject(response)
-                    // Get routes
-                    val routes = jsonResponse.getJSONArray("routes")
-                    val legs = routes.getJSONObject(0).getJSONArray("legs")
-                    val steps = legs.getJSONObject(0).getJSONArray("steps")
-                    for (i in 0 until steps.length()) {
-                        val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                        path.add(PolyUtil.decode(points))
-                    }
-                    for (i in 0 until path.size) {
-                        mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
-                    }
-                }, Response.ErrorListener {
-                    _ ->
-                }){}
-                val requestQueue = Volley.newRequestQueue(this)
-                requestQueue.add(directionsRequest)
 
+                    val candidates = jsonResponse.getJSONArray("candidates")
+                    val latDest = candidates.getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat")
+                    val lngDest = candidates.getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng")
+
+                    val latLngDestination = LatLng(latDest, lngDest)
+                    mMap.addMarker(MarkerOptions().position(latLngDestination).title("Destination"))
+                    val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin=" + myLatLng.latitude.toString() + "," + myLatLng.longitude.toString() + "&destination=" + latDest.toString() + "," + lngDest.toString() + "&key=AIzaSyA24mwjp2WEz31XDV5DGl-EBQe4ceFbnzc"
+
+                    val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> { response ->
+                        val jsonResponse = JSONObject(response)
+                        // Get routes
+                        val routes = jsonResponse.getJSONArray("routes")
+                        val legs = routes.getJSONObject(0).getJSONArray("legs")
+                        val steps = legs.getJSONObject(0).getJSONArray("steps")
+                        for (i in 0 until steps.length()) {
+                            val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                            path.add(PolyUtil.decode(points))
+                        }
+                        for (i in 0 until path.size) {
+                            mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                        }
+                    }, Response.ErrorListener { _ ->
+                    }) {}
+                    val secondRequestQueue = Volley.newRequestQueue(this)
+                    secondRequestQueue.add(directionsRequest)
+                }, Response.ErrorListener { _ ->
+                }) {}
+                val requestQueue = Volley.newRequestQueue(this)
+                requestQueue.add(destinationRequest)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12.0f))
 
             }
@@ -160,7 +168,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     }
 
+    private fun destination_to_true_format(): String {
+
+        return destination.replace(" ","%20")
+    }
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 }
+
