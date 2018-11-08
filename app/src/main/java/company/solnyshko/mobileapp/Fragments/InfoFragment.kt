@@ -67,6 +67,7 @@ class InfoFragment : Fragment() {
                                         it.icon = R.drawable.box
                                     else if (it.type.toLowerCase().contentEquals("letter"))
                                         it.icon = R.drawable.letter
+                                    else it.icon = R.drawable.box
                                 }
 
                                 it.parcels_to_pick.forEach {
@@ -74,6 +75,7 @@ class InfoFragment : Fragment() {
                                         it.icon = R.drawable.box
                                     else if (it.type.toLowerCase().contentEquals("letter"))
                                         it.icon = R.drawable.letter
+                                    else it.icon = R.drawable.box
                                 }
 
                                 sharedPreferences.putDestination(it.address_to)
