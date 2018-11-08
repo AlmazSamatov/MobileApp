@@ -76,6 +76,7 @@ class InfoFragment : Fragment() {
                                         it.icon = R.drawable.letter
                                 }
 
+                                sharedPreferences.deleteAllMyParcels()
                                 sharedPreferences.putDestination(it.address_to)
                                 sharedPreferences.putParcelsToDeliver(it.parcels_to_deliver)
                                 sharedPreferences.putParcelsToPick(it.parcels_to_pick)
