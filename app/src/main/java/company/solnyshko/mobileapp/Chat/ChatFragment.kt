@@ -46,7 +46,7 @@ class ChatFragment : Fragment() {
                 apiService.sendMessage(SendMessageRequest(id, msg)).execute()
             }
             message_adapter!!.add(Message(msg, true))
-            messages_view.setSelection(message_adapter!!.count - 1)
+            messages_view?.setSelection(message_adapter!!.count - 1)
             editText.text.clear()
         }
 
@@ -73,7 +73,7 @@ class ChatFragment : Fragment() {
                                 message_adapter!!.messages = list
                                 message_adapter!!.notifyDataSetChanged()
 
-                                messages_view.setSelection(list.lastIndex)
+                                messages_view?.setSelection(list.lastIndex)
                             }
 
                         }
