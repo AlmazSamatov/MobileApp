@@ -11,6 +11,7 @@ import company.solnyshko.mobileapp.API.MessageResponse
 import company.solnyshko.mobileapp.API.RequestWithID
 import company.solnyshko.mobileapp.API.SendMessageRequest
 import company.solnyshko.mobileapp.R.layout.activity_chat
+import company.solnyshko.mobileapp.R.layout.mobiframework_custom_spinner
 import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,7 +35,6 @@ class ChatFragment : Fragment() {
         message_adapter = MessageAdapter(activity)
         messages_view.adapter = message_adapter
 
-
         val sp = SharedPreferencesWrapper(activity.applicationContext)
         id = sp.getId()
         token = sp.getAccessToken()
@@ -46,6 +46,7 @@ class ChatFragment : Fragment() {
                 apiService.sendMessage(SendMessageRequest(id, msg)).execute()
             }
             message_adapter!!.add(Message(msg, true))
+            messages_view?.setSelection(message_adapter!!.count - 1)
             editText.text.clear()
         }
 
@@ -72,12 +73,13 @@ class ChatFragment : Fragment() {
                                 message_adapter!!.messages = list
                                 message_adapter!!.notifyDataSetChanged()
 
+                                messages_view?.setSelection(list.lastIndex)
                             }
 
                         }
                 handler.postDelayed(this, delay)
             }
-        }, delay)
+        }, 10)
     }
 
 

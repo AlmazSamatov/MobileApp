@@ -15,6 +15,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_above="@+id/bottom_navigation"
     tools:context=".Map.MapsActivity"/>
 
 <android.support.design.widget.BottomNavigationView

@@ -1,19 +1,26 @@
 package company.solnyshko.mobileapp
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.view.MenuItem
+import android.view.View
 import company.solnyshko.mobileapp.Chat.ChatFragment
 import company.solnyshko.mobileapp.Fragments.DestinationFragment
-import android.view.View
 import company.solnyshko.mobileapp.Fragments.InfoFragment
+import company.solnyshko.mobileapp.Map.MapsActivity
 import company.solnyshko.mobileapp.ParcelList.ParcelListFragment
 import company.solnyshko.mobileapp.ParcelList.ParcelListLeaveFragment
-import company.solnyshko.mobileapp.Map.MapsActivity
+import company.solnyshko.mobileapp.util.MyConstants
+import company.solnyshko.mobileapp.util.SharedPreferencesWrapper
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_action_bar.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +39,6 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.selectedItemId = R.id.action_info
     }
 
-    fun cameraOnClick(v: View) {
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
-        startActivityForResult(intent, 0)
-    }
 
     @SuppressLint("MissingPermission")
     fun setBottomNavigationListener() {
