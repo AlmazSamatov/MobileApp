@@ -3,11 +3,9 @@ import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
 import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.http.*
 
 
 interface API {
@@ -27,6 +25,10 @@ interface API {
     @POST("getMessages/")
     fun getMessage(@Body request: RequestWithID): Observable<MessageResponse>
 
+    @Headers("Connection: close")
+    @POST("sendLocation/")
+    fun sendLocation(@Body request: OperatorLocation):  Call<Response>
+
 
     companion object Factory {
         fun create(access_token: String = ""): API {
@@ -39,7 +41,8 @@ interface API {
                 }
 
             val retrofit = Retrofit.Builder()
-                    .baseUrl("https://www.delex.ga:8000/")
+//                    .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8080/")
+                    .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8080/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())

@@ -11,3 +11,4 @@ data class SendMessageRequest(val delivery_operator_id: String, val message: Str
 data class MessageResponse(val error: Int, val message: List<Message>)
 data class Message(val control_operator_id: Int, val send_time: String, val message: String)
 data class Response(val error: Int)
+data class OperatorLocation(val operator_id: Int, val lat: String, val lon:String)

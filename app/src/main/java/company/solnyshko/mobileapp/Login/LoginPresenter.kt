@@ -52,4 +52,6 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
         if (userID.isNotEmpty() && token.isNotEmpty())
             view.launchMainActivity(token, userID)
     }
+
+
 }

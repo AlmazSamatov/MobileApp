@@ -55,4 +55,5 @@ class LoginActivity : AppCompatActivity(), LoginView {
         loginPresenter = LoginPresenter(this, this)
 
     }
+
 }
