@@ -26,6 +26,7 @@ class ChatFragment : Fragment() {
     private var id: String = ""
     private var message_adapter: MessageAdapter? = null
     private var token = ""
+    private var firstTime = true
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater!!.inflate(activity_chat, null)
@@ -73,7 +74,10 @@ class ChatFragment : Fragment() {
                                 message_adapter!!.messages = list
                                 message_adapter!!.notifyDataSetChanged()
 
-                                messages_view?.setSelection(list.lastIndex)
+                                if (firstTime) {
+                                    messages_view?.setSelection(list.lastIndex)
+                                    firstTime = false
+                                }
                             }
 
                         }
