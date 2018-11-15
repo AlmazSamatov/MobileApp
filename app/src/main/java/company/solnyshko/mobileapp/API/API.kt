@@ -41,8 +41,9 @@ interface API {
                 }
 
             val retrofit = Retrofit.Builder()
-//                    .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8080/")
                     .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8080/")
+//                    .baseUrl("http://ec2-18-216-94-240.us-east-2.compute.amazonaws.com:8080/")
+//                    .baseUrl("http://10.240.19.217:8080/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())

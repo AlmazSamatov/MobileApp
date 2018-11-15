@@ -50,7 +50,7 @@ class InfoFragment : Fragment() {
 
             val apiService = API.create(sharedPreferences.getAccessToken())
 
-            apiService.nextAddress(RequestWithID(sharedPreferences.getId()))
+            apiService.nextAddress(RequestWithID(sharedPreferences.getId().toString()))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe({
