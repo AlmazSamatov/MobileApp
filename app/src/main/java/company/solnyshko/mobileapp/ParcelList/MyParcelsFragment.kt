@@ -45,35 +45,10 @@ class MyParcelsFragment : Fragment(), ParcelListView {
         return inflater!!.inflate(R.layout.activity_parclist, null)
     }
 
-//    override fun onDestroy() {
-//        val actionBar = (activity as AppCompatActivity).supportActionBar
-//        actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE)
-//        super.onDestroy()
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (resultCode == Activity.RESULT_OK) {
-//            var index = (0 until parcels_list.adapter.count).random()
-//
-//            val parcel = parcels_list.adapter.getItem(index) as Parcel
-//
-//            (parcels_list.adapter as ParcelAdapter).setChecked(index, true)
-//
-//            (parcels_list.adapter as ParcelAdapter).notifyDataSetChanged()
-//
-//            sharedPreferencesWrapper.dele(parcel)
-//
-//            super.onActivityResult(requestCode, resultCode, data)
-//        }
-//
-//    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferencesWrapper = SharedPreferencesWrapper(activity)
-//        var actionBar = (getActivity() as AppCompatActivity).supportActionBar
-//        actionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE or ActionBar.DISPLAY_SHOW_CUSTOM)
-//        actionBar.setCustomView(R.layout.custom_action_bar)
 
         showParcels(sharedPreferencesWrapper.getMyParcels() as ArrayList<Parcel>)
     }

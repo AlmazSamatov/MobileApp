@@ -64,4 +64,8 @@ public class Parcel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean equals(Parcel p) {
+        return (this.icon == p.icon && this.type.equals(p.type) && this.isChecked == p.isChecked);
+    }
 }
