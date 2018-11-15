@@ -37,9 +37,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
     override fun launchMainActivity(token:String, id: String) {
         val intent = Intent(this, MainActivity::class.java)
-        val sp = SharedPreferencesWrapper(this)
-        sp.putAccessToken(token)
-        sp.putId(id)
         startActivity(intent)
     }
 

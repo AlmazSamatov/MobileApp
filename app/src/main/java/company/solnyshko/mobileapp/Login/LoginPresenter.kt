@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class LoginPresenter internal constructor(internal var view: LoginView, context: Context) : LoginPresenterInterface {
-    private val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(context)
+    val sharedPreferences: SharedPreferencesWrapper = SharedPreferencesWrapper(context)
     private val apiService = API.create()
 
     override fun login(login: String, password: String) {
@@ -29,6 +29,8 @@ class LoginPresenter internal constructor(internal var view: LoginView, context:
                             // true success
                             // TODO: we should save access_token in request_headers (when send requests)
                             // X-Token: <access_token>
+                            sharedPreferences.putAccessToken(it.access_token)
+                            sharedPreferences.putId(it.id)
                             view.launchMainActivity(it.access_token, it.id)
 
                         } else {
