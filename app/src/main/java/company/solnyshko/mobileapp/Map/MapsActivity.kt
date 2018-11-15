@@ -56,7 +56,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         bottom_navigation.selectedItemId = R.id.action_map
         sharedPreference = SharedPreferencesWrapper(this)
         destination = sharedPreference.getDestination()
-//        destination = "Kremlyovskaya St, 2А, Kazan, Tatarstan, Russia, 420500"
+//        destination = "Yamasheva, 73, Kazan, Tatarstan, 420126"
         destination = destination_to_true_format()
     }
 
